@@ -8,8 +8,10 @@ end
 
 RSpec.describe 'An ideal sandwich' do
 
+  # 'let' is run any time an example calls 'sandwich'
+  # an 'example' is a block decared with 'it', in RSpec parlance
   let(:sandwich) {
-    puts "# Hello sailor!" # Shows up once for every 'it' that is run
+    puts "I am running the 'let' block for this example" # Shows up once for every 'it' that is run
     # Last line executed gives the return value
     Sandwich.new('delicious', [])
   }
