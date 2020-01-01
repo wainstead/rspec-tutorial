@@ -13,6 +13,11 @@ module ExpenseTracker
       API.new(ledger: ledger)
     end
 
+    def check_parsed_response_to(satisfy_matcher)
+      parsed = JSON.parse(last_response.body)
+      expect(parsed).to satisfy_matcher
+    end
+
     # We use instance_double here to fake a class we need for our
     # tests. The class we're faking doesn't even need to exist for
     # this to work.
@@ -30,8 +35,7 @@ module ExpenseTracker
 
         it 'returns the expense id' do
           post '/expenses', JSON.generate(expense)
-          parsed = JSON.parse(last_response.body)
-          expect(parsed).to include('expense_id' => 417)
+          check_parsed_response_to include('expense_id' => 417)
         end
 
         it 'responds with a 200 (OK)' do
@@ -51,8 +55,7 @@ module ExpenseTracker
 
         it 'returns an error message' do
           post '/expenses', JSON.generate(expense)
-          parsed = JSON.parse(last_response.body)
-          expect(parsed).to include('error' => 'Expense incomplete')
+          check_parsed_response_to include('error' => 'Expense incomplete')
         end
 
         it 'responds with a 422 (Unprocessable entity)' do
