@@ -5,7 +5,6 @@ require 'rack/test'
 
 # Continuing work on this module
 module ExpenseTracker
-  RecordResult = Struct.new(:success?, :expense_id, :error_message)
 
   RSpec.describe API do
     include Rack::Test::Methods
@@ -14,6 +13,9 @@ module ExpenseTracker
       API.new(ledger: ledger)
     end
 
+    # We use instance_double here to fake a class we need for our
+    # tests. The class we're faking doesn't even need to exist for
+    # this to work.
     let(:ledger) { instance_double('ExpenseTracker::Ledger') }
 
     describe 'POST /expenses' do

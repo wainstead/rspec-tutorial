@@ -1,6 +1,8 @@
 require 'sinatra/base'
 require 'json'
+require_relative 'ledger'
 
+# This module is defined across several files
 module ExpenseTracker
   class API < Sinatra::Base
 
